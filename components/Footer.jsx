@@ -1,25 +1,61 @@
+cat > /home/claude/Footer-v3.jsx << 'EOF'
+import Link from 'next/link'
+
 export default function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid var(--border)', padding: '40px 24px', marginTop: 80, background: 'var(--white)' }}>
-      <div style={{
-        maxWidth: 1200, margin: '0 auto',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        flexWrap: 'wrap', gap: 20,
-      }}>
-        <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700 }}>📷 Hẻm Camera</div>
-          <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 5, lineHeight: 1.6 }}>
-            Máy ảnh cũ chất lượng — nhập từ Nhật<br/>
-            Kiểm định kỹ · Tình trạng thật · Bảo hành rõ
+    <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--white)', marginTop: 80 }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '44px 24px 32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 40, marginBottom: 40 }}>
+
+          {/* Brand */}
+          <div>
+            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 600, marginBottom: 10 }}>Hẻm Camera</div>
+            <p style={{ fontSize: 13.5, color: 'var(--muted)', lineHeight: 1.7, maxWidth: 280 }}>
+              Mua bán máy ảnh cũ nhập từ Nhật. Tình trạng ghi rõ, ảnh thật, kiểm định kỹ trước khi bán.
+            </p>
+          </div>
+
+          {/* Pages */}
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: 'var(--faint)', marginBottom: 14 }}>Danh mục</div>
+            {[
+              ['/', 'Tất cả sản phẩm'],
+              ['/?loai=Body', 'Body'],
+              ['/?loai=Lens', 'Lens'],
+              ['/thuong-hieu', 'Thương hiệu'],
+              ['/pre-order', 'Pre-order'],
+            ].map(([href, label]) => (
+              <Link key={href} href={href}
+                style={{ display: 'block', fontSize: 13.5, color: 'var(--muted)', marginBottom: 8, transition: 'color .15s' }}
+                onMouseOver={e => e.currentTarget.style.color = 'var(--ink)'}
+                onMouseOut={e => e.currentTarget.style.color = 'var(--muted)'}>
+                {label}
+              </Link>
+            ))}
+          </div>
+
+          {/* Contact */}
+          <div>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: 'var(--faint)', marginBottom: 14 }}>Liên hệ</div>
+            {[
+              ['https://zalo.me/0000000000', 'Zalo'],
+              ['https://m.me/hemcamera', 'Messenger'],
+              ['https://facebook.com/hemcamera', 'Facebook'],
+            ].map(([href, label]) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer"
+                style={{ display: 'block', fontSize: 13.5, color: 'var(--muted)', marginBottom: 8, transition: 'color .15s' }}
+                onMouseOver={e => e.currentTarget.style.color = 'var(--ink)'}
+                onMouseOut={e => e.currentTarget.style.color = 'var(--muted)'}>
+                {label} ↗
+              </a>
+            ))}
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 24, fontSize: 13 }}>
-          <a href="https://zalo.me/0000000000" target="_blank" rel="noreferrer"
-            style={{ color: 'var(--muted)' }}>Zalo</a>
-          <a href="https://facebook.com/hemcamera" target="_blank" rel="noreferrer"
-            style={{ color: 'var(--muted)' }}>Facebook</a>
+
+        <div style={{ borderTop: '1px solid var(--border)', paddingTop: 20, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10 }}>
+          <span style={{ fontSize: 12, color: 'var(--faint)' }}>© 2026 Hẻm Camera. Hàng nhập khẩu từ Nhật Bản.</span>
+          <span style={{ fontSize: 12, color: 'var(--faint)' }}>hemcamera.com</span>
         </div>
-        <div style={{ fontSize: 12, color: 'var(--muted)' }}>© 2026 Hẻm Camera</div>
       </div>
     </footer>
   )

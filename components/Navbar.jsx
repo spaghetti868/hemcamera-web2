@@ -1,87 +1,91 @@
+
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
 
-export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+const NAV = [
+  { href: '/',             label: 'Tất cả' },
+  { href: '/?loai=Body',  label: 'Body' },
+  { href: '/?loai=Lens',  label: 'Lens' },
+  { href: '/thuong-hieu', label: 'Thương hiệu' },
+  { href: '/pre-order',   label: 'Pre-order' },
+]
 
-  const NAV = [
-    { href: '/',             label: 'Tất cả' },
-    { href: '/?loai=Body',  label: 'Body' },
-    { href: '/?loai=Lens',  label: 'Lens' },
-    { href: '/thuong-hieu', label: 'Thương hiệu' },
-    { href: '/pre-order',   label: 'Pre-order' },
-  ]
+export default function Navbar() {
+  const [open, setOpen] = useState(false)
 
   return (
     <>
       <header style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: 'rgba(250,250,248,0.93)',
+        position: 'sticky', top: 0, zIndex: 200,
+        background: 'rgba(247,245,242,0.96)',
         borderBottom: '1px solid var(--border)',
-        backdropFilter: 'blur(14px)',
+        backdropFilter: 'blur(16px)',
       }}>
-        <div style={{
-          maxWidth: 1200, margin: '0 auto', padding: '0 20px',
-          height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8 }}
-            onClick={() => setMenuOpen(false)}>
-            <span style={{ fontSize: 20 }}>📷</span>
-            <span style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700 }}>Hẻm Camera</span>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+
+          {/* Logo */}
+          <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+            <div style={{ width: 28, height: 28, background: 'var(--ink)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="3.5" stroke="white" strokeWidth="1.5"/>
+                <path d="M2 5.5h1.5L5 3.5h6l1.5 2H14a1 1 0 011 1v5a1 1 0 01-1 1H2a1 1 0 01-1-1v-5a1 1 0 011-1z" stroke="white" strokeWidth="1.2" fill="none"/>
+              </svg>
+            </div>
+            <span style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 600, letterSpacing: 0.2 }}>Hẻm Camera</span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 24, fontSize: 13, fontWeight: 500 }}>
+          <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
             {NAV.map(n => (
               <Link key={n.href} href={n.href}
-                style={{ color: 'var(--muted)', transition: 'color .15s' }}
-                onMouseOver={e => e.currentTarget.style.color = 'var(--black)'}
-                onMouseOut={e => e.currentTarget.style.color = 'var(--muted)'}>
+                style={{ padding: '6px 14px', fontSize: 13.5, fontWeight: 500, color: 'var(--muted)', borderRadius: 20, transition: 'all .15s' }}
+                onMouseOver={e => { e.currentTarget.style.color = 'var(--ink)'; e.currentTarget.style.background = 'rgba(0,0,0,0.06)' }}
+                onMouseOut={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.background = 'transparent' }}>
                 {n.label}
               </Link>
             ))}
-            <a href="https://zalo.me/0000000000" target="_blank" rel="noreferrer"
-              style={{ background: 'var(--black)', color: 'var(--white)', padding: '8px 18px', borderRadius: 6, fontWeight: 600 }}>
-              Liên hệ
-            </a>
           </nav>
 
-          {/* Hamburger */}
-          <button onClick={() => setMenuOpen(o => !o)} className="hamburger"
-            style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, padding: 8 }}>
-            {menuOpen ? '✕' : '☰'}
-          </button>
+          {/* Right: CTA + hamburger */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <a href="https://zalo.me/0000000000" target="_blank" rel="noreferrer"
+              className="desktop-only"
+              style={{ background: 'var(--ink)', color: '#fff', padding: '8px 18px', borderRadius: 20, fontSize: 13, fontWeight: 600, letterSpacing: 0.2, transition: 'opacity .15s' }}
+              onMouseOver={e => e.currentTarget.style.opacity = '.8'}
+              onMouseOut={e => e.currentTarget.style.opacity = '1'}>
+              Liên hệ Zalo
+            </a>
+            <button onClick={() => setOpen(o => !o)} className="hamburger"
+              style={{ display: 'none', background: 'none', border: '1px solid var(--border)', padding: '6px 10px', borderRadius: 6, fontSize: 18, lineHeight: 1 }}>
+              {open ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile menu overlay */}
-      {menuOpen && (
-        <div style={{
-          position: 'fixed', top: 60, left: 0, right: 0, bottom: 0,
-          background: 'var(--white)', zIndex: 99,
-          display: 'flex', flexDirection: 'column', padding: '24px 20px', gap: 4,
-          borderTop: '1px solid var(--border)',
+      {/* Mobile overlay */}
+      {open && (
+        <div className="mobile-menu" style={{
+          position: 'fixed', inset: '58px 0 0 0', background: 'var(--bg)',
+          zIndex: 199, display: 'flex', flexDirection: 'column',
+          padding: '8px 0', borderTop: '1px solid var(--border)',
+          overflowY: 'auto',
         }}>
           {NAV.map(n => (
-            <Link key={n.href} href={n.href} onClick={() => setMenuOpen(false)}
-              style={{ padding: '16px 0', fontSize: 18, fontWeight: 600, fontFamily: 'var(--font-display)', borderBottom: '1px solid var(--border)' }}>
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}
+              style={{ padding: '16px 24px', fontSize: 17, fontWeight: 500, borderBottom: '1px solid var(--border)', fontFamily: 'var(--font-serif)' }}>
               {n.label}
             </Link>
           ))}
-          <a href="https://zalo.me/0000000000" target="_blank" rel="noreferrer"
-            style={{ marginTop: 24, background: '#0068ff', color: '#fff', padding: '15px 0', borderRadius: 8, textAlign: 'center', fontWeight: 700, fontSize: 16 }}>
-            💬 Zalo ngay
-          </a>
+          <div style={{ padding: '20px 24px' }}>
+            <a href="https://zalo.me/0000000000" target="_blank" rel="noreferrer"
+              style={{ display: 'block', background: '#0068ff', color: '#fff', padding: '14px', borderRadius: 8, textAlign: 'center', fontWeight: 700 }}>
+              💬 Zalo ngay
+            </a>
+          </div>
         </div>
       )}
-
-      <style>{`
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .hamburger   { display: flex !important; }
-        }
-      `}</style>
     </>
   )
 }
