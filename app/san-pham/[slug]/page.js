@@ -1,5 +1,5 @@
 import { collection, query, where, getDocs } from 'firebase/firestore'
-import { db } from '@/lib/firebase'
+import { db } from '../../../lib/firebase'
 import { notFound } from 'next/navigation'
 
 const fmt = n => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(n || 0)
