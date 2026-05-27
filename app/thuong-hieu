@@ -1,0 +1,60 @@
+import Link from 'next/link'
+
+export const metadata = {
+  title: 'Thương hiệu — Hẻm Camera',
+  description: 'Khám phá máy ảnh cũ theo thương hiệu: Sony, Fujifilm, Canon, Nikon và nhiều hơn nữa.',
+}
+
+const BRANDS = [
+  { slug: 'sony',      label: 'Sony',      emoji: '🎯', desc: 'Alpha, ZV, RX series' },
+  { slug: 'fujifilm',  label: 'Fujifilm',  emoji: '🎞', desc: 'X-T, X-S, X100 series' },
+  { slug: 'canon',     label: 'Canon',     emoji: '📷', desc: 'EOS R, M, 5D series' },
+  { slug: 'nikon',     label: 'Nikon',     emoji: '🔭', desc: 'Z, D series' },
+  { slug: 'leica',     label: 'Leica',     emoji: '💎', desc: 'M, Q, SL series' },
+  { slug: 'olympus',   label: 'Olympus',   emoji: '🏔', desc: 'OM-D, PEN series' },
+  { slug: 'panasonic', label: 'Panasonic', emoji: '⚡', desc: 'Lumix S, G series' },
+  { slug: 'ricoh',     label: 'Ricoh',     emoji: '📸', desc: 'GR series' },
+  { slug: 'sigma',     label: 'Sigma',     emoji: '🔬', desc: 'fp, BF series' },
+]
+
+export default function BrandsPage() {
+  return (
+    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '52px 24px' }}>
+      <div style={{ marginBottom: 44, textAlign: 'center' }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 12 }}>
+          Khám phá theo thương hiệu
+        </p>
+        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(30px, 5vw, 48px)', fontWeight: 700 }}>
+          Thương hiệu
+        </h1>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
+        {BRANDS.map(brand => (
+          <Link key={brand.slug} href={`/thuong-hieu/${brand.slug}`}>
+            <div style={{
+              border: '1px solid var(--border)', borderRadius: 12,
+              padding: '24px 20px', textAlign: 'center', cursor: 'pointer',
+              transition: 'all 0.2s ease', background: 'var(--card)',
+            }}
+              onMouseOver={e => {
+                e.currentTarget.style.borderColor = 'var(--gold)'
+                e.currentTarget.style.transform = 'translateY(-3px)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.borderColor = 'var(--border)'
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = 'none'
+              }}
+            >
+              <div style={{ fontSize: 36, marginBottom: 12 }}>{brand.emoji}</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700, marginBottom: 4 }}>{brand.label}</div>
+              <div style={{ fontSize: 12, color: 'var(--muted)' }}>{brand.desc}</div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
