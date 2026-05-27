@@ -1,4 +1,4 @@
-cat > /home/claude/Footer-v3.jsx << 'EOF'
+
 import Link from 'next/link'
 
 export default function Footer() {
