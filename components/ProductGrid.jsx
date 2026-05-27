@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { collection, query, where, onSnapshot } from 'firebase/firestore'
-import { db } from '../lib/firebase'
+import { db } from '../firebase'
 import ProductCard from './ProductCard'
 
 export default function ProductGrid({ loai }) {
